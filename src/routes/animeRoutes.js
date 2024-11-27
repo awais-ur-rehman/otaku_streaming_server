@@ -12,5 +12,6 @@ router.get("/info/:id", animeController.getAnimeInfo);
 router.get("/watch/:episodeId", animeController.getEpisodeSources);
 router.get("/popular", animeController.getPopularAnime);
 router.get("/top-airing", animeController.getTopAiringAnime);
+router.get("/video-url/:episodeId", animeController.getEpisodeVideoUrl);
 
 module.exports = router;

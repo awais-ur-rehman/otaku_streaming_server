@@ -46,14 +46,10 @@ exports.getEpisodeSources = async (req, res) => {
 exports.getPopularAnime = async (req, res) => {
   try {
     const { page = 1 } = req.query;
-    console.log("Received request for popular anime, page:", page); // Debug log
-
     const results = await animeService.getPopularAnime(Number(page));
-    console.log("Popular anime results:", results); // Debug log
-
     res.json(results);
   } catch (error) {
-    console.error("Error in getPopularAnime controller:", error); // Log detailed error
+    console.error("Error in getPopularAnime controller:", error);
     res.status(500).json({ error: "Something went wrong!" });
   }
 };
@@ -66,6 +62,25 @@ exports.getTopAiringAnime = async (req, res) => {
     res.json(results);
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: "Something went wrong!" });
+  }
+};
+
+// Get Streaming Video URL
+exports.getEpisodeVideoUrl = async (req, res) => {
+  try {
+    const { episodeId } = req.params;
+    console.log("Received request for video URL with episodeId:", episodeId);
+
+    const videoUrl = await animeService.extractVideoUrl(episodeId);
+
+    if (!videoUrl) {
+      return res.status(404).json({ error: "Video URL not found!" });
+    }
+
+    res.json({ videoUrl });
+  } catch (error) {
+    console.error("Error in getEpisodeVideoUrl controller:", error);
     res.status(500).json({ error: "Something went wrong!" });
   }
 };
